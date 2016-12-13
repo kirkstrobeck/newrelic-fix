@@ -640,7 +640,7 @@
                     i = this.opts || {};
                 if (e) {
                     if (n) return e.cancelled = !0, void e[C][q]--;
-                    var o, a; "string" == typeof r ? o = r : "object" == typeof r && r instanceof P && (o = r.url), a = ("" + (r.method || i.method || "GET")).toUpperCase();
+                    var o, a; "string" == typeof r ? o = r : "object" == typeof r && r instanceof P && (o = r.url), a = ("" + (typeof r === 'object' && r.hasOwnProperty('method') && r.method || typeof i === 'object' && i.hasOwnProperty('method') && i.method || "GET")).toUpperCase();
                     var s = e.attrs,
                         u = s.params = {},
                         c = f(o);
@@ -726,7 +726,7 @@
                     E = [],
                     S = n.attrs,
                     L = S.metrics,
-                    R = S.params,
+                    R = S.params || {},
                     N = c.info.queueTime,
                     A = c.info.applicationTime; "undefined" == typeof p ? (p = b, b -= t) : b -= p;
                 var U = [o(b), o(n.end - n.start), o(n.jsEnd - n.end), o(n.jsTime)];
@@ -795,7 +795,7 @@
         function s(n, t) {
             var e = "unknown";
             if (n && n instanceof XMLHttpRequest) {
-                var r = C.context(n).params;
+                var r = C.context(n).params || {};
                 e = r.status + " " + r.method + ": " + r.host + r.pathname } else n && "string" == typeof n.tagName && (e = n.tagName.toLowerCase(), n.id && (e += "#" + n.id), n.className && (e += "." + E(n.classList).join(".")));
             return "unknown" === e && (t === document ? e = "document" : t === window ? e = "window" : t instanceof FileReader && (e = "FileReader")), e }
 
@@ -809,6 +809,7 @@
                 e.s < B || (B = e.s, l(e)) }) }
 
         function f(n, t, e, r) {
+            e = e || {};
             var i = null; "err" === n ? i = { n: "error", s: r.time, e: r.time, o: e.message, t: e.stackHash } : "xhr" === n && (i = { n: "Ajax", s: r.time, e: r.time + r.duration, o: e.status + " " + e.method + ": " + e.host + e.pathname, t: "ajax" }), i && l(i) }
 
         function l(n) {
